@@ -176,8 +176,8 @@
 <script>
   // ==== CONFIGURATION ====
   const SHEET_ID = "1jvuX_lRXQgh4a0-2nQMsQKY92nZXi6lCe8UD_RnN0WY";
-  const GID = "0"; // change this if your data is on a different tab (find gid in the sheet URL after #gid=)
-  const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${GID}`;
+  const SHEET_NAME = "arranged"; // pulls from the "arranged" tab specifically, not "raw"
+  const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_NAME)}`;
   // ========================
 
   let allRows = [];
@@ -211,9 +211,9 @@
       tbody.innerHTML = `<tr><td colspan="3" class="empty-msg">No matching records found.</td></tr>`;
       return;
     }
-    tbody.innerHTML = rows.map(r => `
+    tbody.innerHTML = rows.map((r, i) => `
       <tr>
-        <td class="serial-col">${r[0] ?? ''}</td>
+        <td class="serial-col">${i + 1}</td>
         <td class="reg-col">${r[1] ?? ''}</td>
         <td>${r[2] ?? ''}</td>
       </tr>
@@ -250,8 +250,8 @@
       if(!res.ok) throw new Error('Network response was not ok');
       const text = await res.text();
       const parsed = parseCSV(text);
-      // Drop header row, keep rows that have at least a serial value
-      allRows = parsed.slice(1).filter(r => r[0] && r[0].trim() !== '');
+      // Drop header row, keep rows that have a registration number
+      allRows = parsed.slice(1).filter(r => r[1] && r[1].trim() !== '');
       applySearch();
     } catch(err){
       document.getElementById('tableBody').innerHTML =
