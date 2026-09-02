@@ -93,11 +93,11 @@
   table{
     width:100%;
     border-collapse:collapse;
-    min-width:480px;
-    table-layout:fixed;
+    min-width:100%;
+    table-layout:auto;
   }
-  .serial-col{ color:var(--muted); width:40px; text-align:left; }
-  .reg-col{ font-weight:700; color:#eafff5; width:140px; }
+  .serial-col{ color:var(--muted); width:45px; text-align:left; }
+  .reg-col{ font-weight:700; color:#eafff5; width:150px; }
   thead th{
     background:#000;
     color:var(--accent);
@@ -162,7 +162,7 @@
     <thead>
       <tr>
         <th class="serial-col">S/N</th>
-        <th>DCU Registration</th>
+        <th class="reg-col">DCU Registration</th>
         <th>Name</th>
       </tr>
     </thead>
